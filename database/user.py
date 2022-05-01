@@ -11,7 +11,7 @@ async def read_user():
     users = []
     if cursor:
         async for document in cursor:
-            users.append(to_user(document))
+            users.append(User(**document))
         return users
     return users
 
@@ -20,7 +20,7 @@ async def read_user_by_id(id: str):
     db = await database.db_connection()
     user = await db.user.find_one({"_id": PyObjectId(id)})
     if user:
-        return to_user(user)
+        return User(**user)
     return None
 
 
@@ -28,7 +28,7 @@ async def create_user(user_data: dict):
     db = await database.db_connection()
     user = await db.user.insert_one(user_data)
     new_user = await db.user.find_one({"_id": user.inserted_id})
-    return to_user(new_user)
+    return User(**new_user)
 
 
 async def update_user(id: str, user_data: dict):
@@ -60,23 +60,3 @@ async def delete_user(id: str):
         return True
     else:
         return False
-
-
-def to_user(user) -> dict:
-    return {
-        "id": str(user.get("_id")),
-        "username": user.get("username"),
-        "password": user.get("password"),
-        "fullname": user.get("fullname"),
-        "gender": user.get("gender"),
-        "address": user.get("address"),
-        "mobile": user.get("mobile"),
-        "indentityNumber": user.get("indentityNumber"),
-        "role": user.get("role"),
-        "image": user.get("image"),
-        "FeatureVector": user.get("FeatureVector")
-    }
-
-
-def to_user_list(users) -> list:
-    return [to_user(user) for user in users]
