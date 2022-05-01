@@ -10,8 +10,8 @@ async def read_user():
     cursor = db.user.find({})
     users = []
     if cursor:
-        async for document in cursor:
-            users.append(User(**document))
+        async for user in cursor:
+            users.append(User(**user))
         return users
     return users
 
@@ -46,7 +46,6 @@ async def update_user(id: str, user_data: dict):
         user["indentityNumber"] = user_data.get("indentityNumber")
         user["role"] = user_data.get("role")
         user["image"] = user_data.get("image")
-        user["FeatureVector"] = user_data.get("FeatureVector")
         updated_user = await db.user.update_one({"_id": PyObjectId(id)}, {"$set": user})
         return updated_user.acknowledged
     return False
