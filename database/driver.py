@@ -1,9 +1,11 @@
 import motor.motor_asyncio
 import json
 
+
 # Load cluster url từ file json
-with open("../config.json", "r") as file:
+with open("./config.json", "r") as file:
     config = json.load(file)
+
 
 MONGODB_URL = config["cluster"]
 DATABASE_NAME = "pbl5"

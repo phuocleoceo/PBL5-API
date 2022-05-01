@@ -1,9 +1,10 @@
+from pydantic import BaseModel, Field
 from .PyObjectId import PyObjectId
-from pydantic import BaseModel
-from typing import List
+from typing import Optional, List
 
 
 class User(BaseModel):
+    id: Optional[PyObjectId] = Field(alias="_id")
     username: str
     password: str
     fullname: str
