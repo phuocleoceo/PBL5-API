@@ -1,6 +1,6 @@
 def ResponseModel(data, code, message, error):
     return {
-        "data": [data],
+        "data": data,
         "code": code,
         "message": message,
         "error": error
