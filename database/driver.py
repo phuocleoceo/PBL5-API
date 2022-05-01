@@ -6,7 +6,7 @@ with open("../config.json", "r") as file:
     config = json.load(file)
 
 MONGODB_URL = config["cluster"]
-DATABASE_NAME = "online_shop_db"
+DATABASE_NAME = "pbl5"
 
 
 class Database():

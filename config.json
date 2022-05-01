@@ -1,3 +1,3 @@
 {
-    "cluster": "mongodb+srv://teamDA:123@ngan.2a0oj.mongodb.net/pbl5?retryWrites=true&w=majority"
+    "cluster": "your cluster"
 }
