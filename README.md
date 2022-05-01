@@ -1,1 +1,1 @@
-# pip install requirements.txt 
+# python/python3 main.py
