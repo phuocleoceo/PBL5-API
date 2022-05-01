@@ -1,4 +1,5 @@
 from models.PyObjectId import PyObjectId
+from models.user import User
 from .driver import Database
 
 database = Database()
@@ -6,10 +7,13 @@ database = Database()
 
 async def read_user():
     db = await database.db_connection()
-    users = await db.user.find({})
-    if users:
-        return to_user_list(users)
-    return None
+    cursor = db.user.find({})
+    users = []
+    if cursor:
+        async for document in cursor:
+            users.append(to_user(document))
+        return users
+    return users
 
 
 async def read_user_by_id(id: str):

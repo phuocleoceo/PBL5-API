@@ -1,4 +1,5 @@
 import motor.motor_asyncio
+import certifi
 import json
 
 
@@ -18,6 +19,6 @@ class Database():
 
     async def db_connection(self):
         if self.connected == False:
-            self.client = motor.motor_asyncio.AsyncIOMotorClient(MONGODB_URL)
+            self.client = motor.motor_asyncio.AsyncIOMotorClient(MONGODB_URL, tlsCAFile=certifi.where())
             self.connected = True
         return self.client[DATABASE_NAME]

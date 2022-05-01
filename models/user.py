@@ -15,3 +15,15 @@ class User(BaseModel):
     role: str
     image: List
     FeatureVector: List
+
+
+class UserUpsert(BaseModel):
+    username: str
+    password: str
+    fullname: str
+    gender: str
+    address: str
+    mobile: str
+    indentityNumber: str
+    role: str
+    image: List
