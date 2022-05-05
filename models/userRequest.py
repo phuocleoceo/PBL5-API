@@ -1,0 +1,25 @@
+from pydantic import BaseModel, Field
+from .PyObjectId import PyObjectId
+from typing import Optional, List
+from bson import ObjectId
+
+
+class UserRequest(BaseModel):
+    id: Optional[PyObjectId] = Field(alias="_id")
+    userid: str
+    timestamps: str
+    imageUri: str
+    response: str
+
+    class Config:
+        arbitrary_types_allowed = True
+        json_encoders = {
+            ObjectId: str
+        }
+
+
+class UserRequestUpsert(BaseModel):
+    userid: str
+    timestamps: str
+    imageUri: str
+    response: str
