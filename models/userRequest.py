@@ -2,12 +2,13 @@ from pydantic import BaseModel, Field
 from .PyObjectId import PyObjectId
 from typing import Optional, List
 from bson import ObjectId
+import datetime
 
 
 class UserRequest(BaseModel):
     id: Optional[PyObjectId] = Field(alias="_id")
     userid: str
-    timestamps: str
+    timestamps: datetime.datetime
     imageUri: str
     response: str
 

@@ -10,17 +10,19 @@ async def read_userRequest():
     cursor = db.userRequest.find({})
     userRequests = []
     if cursor:
-        async for user in cursor:
-            users.append(UserRequest(**userRequest))
+        async for userRequest in cursor:
+            userRequests.append(UserRequest(**userRequest))
         return userRequests
     return userRequests
+
 
 async def read_userRequest_by_id(id: str):
     db = await database.db_connection()
     userRequest = await db.userRequest.find_one({"_id": PyObjectId(id)})
-    if  userRequest:
+    if userRequest:
         return UserRequest(**userRequest)
     return None
+
 
 async def create_userRequest(userRequest_data: dict):
     db = await database.db_connection()

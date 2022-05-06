@@ -12,14 +12,14 @@ router = APIRouter(
 
 @router.get("/")
 async def read():
-    products = await read_userRequest()
-    return ResponseModel(products, 200, "UserRequest retrieved successfully.", False)
+    requests = await read_userRequest()
+    return ResponseModel(requests, 200, "UserRequest retrieved successfully.", False)
 
 
 @router.get("/{id}")
 async def read_by_id(id: str):
-    product = await read_userRequest_by_id(id)
-    return ResponseModel(product, 200, "UserRequest retrieved successfully.", False)
+    request = await read_userRequest_by_id(id)
+    return ResponseModel(request, 200, "UserRequest retrieved successfully.", False)
 
 
 @router.post("/")

@@ -12,8 +12,8 @@ router = APIRouter(
 
 @router.get("/")
 async def read():
-    products = await read_history()
-    return ResponseModel(products, 200, "Histories retrieved successfully.", False)
+    histories = await read_history()
+    return ResponseModel( histories, 200, "Histories retrieved successfully.", False)
 
 
 @router.post("/")
