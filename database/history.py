@@ -14,6 +14,14 @@ async def read_history():
         return histories
     return histories
 
+async def read_history_by_id(id: str):
+    db = await database.db_connection()
+    history = await db.history.find_one({"_id": PyObjectId(id)})
+    if history:
+        return History(**history)
+    return None
+
+
 async def create_history(history_data: dict):
     db = await database.db_connection()
     history = await db.history.insert_one(history_data)
