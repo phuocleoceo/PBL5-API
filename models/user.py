@@ -15,7 +15,7 @@ class User(BaseModel):
     indentityNumber: str
     role: str
     image: List
-    FeatureVector: List
+    FeatureVector: List[List]
 
     class Config:
         arbitrary_types_allowed = True

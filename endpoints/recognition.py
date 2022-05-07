@@ -1,6 +1,7 @@
 from models.recognition import Recognition, Image
 from models.ResponseModel import ResponseModel
 from fastapi import APIRouter
+from typing import List
 import numpy as np
 import base64
 import cv2
@@ -26,3 +27,13 @@ def read_image(uri: str):
     nparr = np.fromstring(base64.b64decode(encoded_data), np.uint8)
     img = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
     return img
+
+
+@router.get("/svm/")
+async def retrain_svm():
+    pass
+
+
+@router.post("/vector")
+async def save_feature_vector(user_id: List):
+    pass
