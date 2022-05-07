@@ -1,23 +1,23 @@
 from fastapi import APIRouter, File, UploadFile
 from models.ResponseModel import ResponseModel
-from models.predict import Predict
+from models.recognition import Recognition
 import numpy as np
 import cv2
 
 
 router = APIRouter(
-    prefix="/predict",
-    tags=["Predict"],
+    prefix="/recognition",
+    tags=["Recognition"],
     responses={404: {"description": "Not found"}},
 )
 
 
-@router.post("/predict/")
+@router.post("/get_identity/")
 async def get_identity(image: UploadFile = File(...)):
     image = read_image(await image.read())
     # Mock predict
-    predict = Predict(identity=str(image.shape), distance=0.5)
-    return ResponseModel(predict, 200, "Predict retrieved successfully.", False)
+    predict = Recognition(identity=str(image.shape), distance=0.5)
+    return ResponseModel(predict, 200, "Recognition successfully.", False)
 
 
 def read_image(file: bytes):
