@@ -1,7 +1,8 @@
-from fastapi import APIRouter, File, UploadFile
+from models.recognition import Recognition, Image
 from models.ResponseModel import ResponseModel
-from models.recognition import Recognition
+from fastapi import APIRouter
 import numpy as np
+import base64
 import cv2
 
 
@@ -13,15 +14,15 @@ router = APIRouter(
 
 
 @router.post("/get_identity/")
-async def get_identity(image: UploadFile = File(...)):
-    image = read_image(await image.read())
+async def get_identity(image: Image):
+    image = read_image("data:image/png;base64,"+image.uri)
     # Mock predict
     predict = Recognition(identity=str(image.shape), distance=0.5)
     return ResponseModel(predict, 200, "Recognition successfully.", False)
 
 
-def read_image(file: bytes):
-    # Convert bytes sang OpenCV nparray
-    img = np.asarray(bytearray(file), dtype="uint8")
-    img = cv2.imdecode(img, cv2.IMREAD_COLOR)
+def read_image(uri: str):
+    encoded_data = uri.split(',')[1]
+    nparr = np.fromstring(base64.b64decode(encoded_data), np.uint8)
+    img = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
     return img
