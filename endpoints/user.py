@@ -26,7 +26,7 @@ async def read_by_id(id: str):
 @router.post("/")
 async def create(user: UserUpsert):
     user_dict = user.dict(by_alias=True)
-    user_dict["FeatureVector"] = [""]
+    user_dict["FeatureVector"] = [[""]]
     new_user = await create_user(user_dict)
     return ResponseModel(new_user, 200, "User added successfully.", False)
 
