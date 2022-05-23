@@ -9,3 +9,8 @@ class Recognition(BaseModel):
 
 class Image(BaseModel):
     uri: str
+
+
+class SVM_Train(BaseModel):
+    train_acc: float
+    test_acc: float

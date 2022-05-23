@@ -1,6 +1,7 @@
-from models.recognition import Recognition, Image
+from models.recognition import Recognition, Image, SVM_Train
 from models.ResponseModel import ResponseModel
 from Face.Inference.Facenet import Facenet
+from Face.Classifier.SVM import SVM
 from fastapi import APIRouter
 from typing import List
 import numpy as np
@@ -8,6 +9,7 @@ import base64
 import cv2
 
 fn = Facenet()
+svm = SVM()
 
 router = APIRouter(
     prefix="/recognition",
@@ -20,7 +22,7 @@ router = APIRouter(
 async def get_identity(image: Image):
     image = read_image(image.uri)
     # Mock predict
-    identity, distance, _, _ = fn.Get_People_Identity_SVM(image)[0]
+    identity, distance = fn.Get_People_Identity_SVM(image)[0]
     # Kết quả nhận dạng 1 người
     predict = Recognition(identity=identity, distance=distance)
     # Phản hồi kết quả
@@ -36,7 +38,9 @@ def read_image(uri: str):
 
 @router.get("/svm/")
 async def retrain_svm():
-    pass
+    train_acc, test_acc = svm.train()
+    svm_train = SVM_Train(train_acc=train_acc, test_acc=test_acc)
+    return ResponseModel(svm_train, 200, "Train SVM successfully.", False)
 
 
 @router.post("/vector")

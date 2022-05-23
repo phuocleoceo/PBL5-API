@@ -25,51 +25,6 @@ class Facenet:
         # return np.sqrt(np.sum((embd_db-embd_recog)**2))
         return distance.euclidean(embd_db, embd_recog)
 
-    def Face_Identify(self, face_embedding):
-        """
-        Hàm xác định danh tính khuôn mặt
-        face_embedding : vector đặc trưng khuôn mặt đang xét
-        """
-        # Từ điển chứa khoảng cách Euclidean từ face_embedding đến các vector trong database
-        distance = {}
-        for name, embd in self.database.items():
-            # Mỗi người sẽ có nhiều vector đặc trưng
-            # Ta tính khoảng cách từ mỗi vector đặc trưng đó đến face_embedding
-            euc_dist = [self.Euclidean_Distance(ed, face_embedding) for ed in embd]
-            # Gán distance của 1 người thành min của mảng khoảng cách vừa tính được
-            distance[name] = min(euc_dist)
-
-        # Lấy key có value nhỏ nhất trong distance
-        person_name = min(distance, key=distance.get)
-        min_dist = distance[person_name]
-
-        # Nếu khoảng cách > 1 thì người đang xét không có trong Database
-        if min_dist > 1:
-            person_name = "UNKNOWN"
-        return person_name, min_dist
-
-    def Get_People_Identity(self, image, resize=True, scale=4):
-        """
-        Hàm trả về tên khuôn mặt
-        image : ảnh
-        resize : có giảm kích thước ảnh hay không nhằm tăng tốc độ xử lý
-        scale : tỉ lệ giảm kích thước ảnh
-        """
-        # Detect hình chữ nhật bao quanh khuôn mặt
-        rec = self.detector.Detect_Face(image, resize, scale)
-        # Ma trận gương mặt được detect
-        face_crop = self.detector.Crop_Face(image, rec)
-
-        # Nhận diện nhiều gương mặt cho chắc
-        identity = []
-        for face, box in zip(face_crop, rec):
-            # Trích xuất đặc trưng
-            face_embd = self.recognizer.Get_Face_Embedding(face)
-            # Nhận dạng
-            person_name, distance = self.Face_Identify(face_embd)
-            identity.append((person_name, distance, face_embd, box))
-        return identity
-
     def Get_People_Identity_SVM(self, image, resize=True, scale=4):
         """
         Hàm trả về tên khuôn mặt sử dụng SVM
@@ -85,7 +40,7 @@ class Facenet:
 
         # Nhận diện nhiều gương mặt cho chắc
         identity = []
-        for face, box in zip(face_crop, rec):
+        for face in face_crop:
             # Trích xuất đặc trưng
             face_embd = self.recognizer.Get_Face_Embedding(face)
             # Nhận dạng
@@ -94,5 +49,5 @@ class Facenet:
             distance = min([self.Euclidean_Distance(ed, face_embd) for ed in self.database[person_name]])
             if distance > 1:
                 person_name = "UNKNOWN"
-            identity.append((person_name, distance, face_embd, box))
+            identity.append((person_name, distance))
         return identity
