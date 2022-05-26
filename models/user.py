@@ -33,4 +33,8 @@ class UserUpsert(BaseModel):
     mobile: str
     indentityNumber: str
     role: str
+
+
+class UserImage(BaseModel):
+    user_id: str
     image: List[str]
