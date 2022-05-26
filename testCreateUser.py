@@ -38,8 +38,15 @@ class User:
         }
 
 
-myobj = User()
+my_user = User(username="namnhi", password="blackpink", fullname="Ong Nguyen Uyen Nhi",
+               gender="Nữ", address="Đà Nẵng", mobile="0596548526",
+               indentityNumber="162358641", role="user")
+my_user.add_image("../FaceRecognition/Dataset/People/NamNhi/image.jpg")
+my_user.add_image("../FaceRecognition/Dataset/People/NamNhi/IMG_3296.JPG")
+my_user.add_image("../FaceRecognition/Dataset/People/NamNhi/IMG_3301.JPG")
+my_user.add_image("../FaceRecognition/Dataset/People/NamNhi/IMG_3315.JPG")
+my_user.add_image("../FaceRecognition/Dataset/People/NamNhi/IMG_3316.JPG")
 
-x = requests.post(url, json=myobj)
+x = requests.post(url, json=my_user.as_dict())
 response = x.json()
 print(response)
