@@ -25,5 +25,5 @@ async def read_by_id(id: str):
 @router.post("/")
 async def create(userRequest: UserRequestUpsert):
     userRequest_dict = userRequest.dict(by_alias=True)
-    new_userRequest = await create_user(userRequest_dict)
+    new_userRequest = await create_userRequest(userRequest_dict)
     return ResponseModel(new_userRequest, 200, "User Request added successfully.", False)
