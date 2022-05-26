@@ -14,7 +14,7 @@ class User(BaseModel):
     mobile: str
     indentityNumber: str
     role: str
-    image: List
+    image: List[str]
     FeatureVector: List[List]
 
     class Config:
@@ -33,4 +33,4 @@ class UserUpsert(BaseModel):
     mobile: str
     indentityNumber: str
     role: str
-    image: List
+    image: List[str]
