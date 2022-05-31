@@ -8,7 +8,7 @@ import datetime
 class UserRequest(BaseModel):
     id: Optional[PyObjectId] = Field(alias="_id")
     userid: str
-    timestamps: datetime.datetime
+    timestamps: str
     imageUri: str
     response: str
 

@@ -5,10 +5,9 @@ from bson import ObjectId
 import datetime
 
 
-
 class History(BaseModel):
     id: Optional[PyObjectId] = Field(alias="_id")
-    timestamps: datetime.datetime
+    timestamps: str
     imageURi: str
     isVerify: str
     userId: str
