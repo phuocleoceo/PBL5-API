@@ -1,6 +1,8 @@
 certifi==2021.10.8
-fastapi==0.75.2
-motor==2.5.1
+cloudinary==1.29.0
+fastapi==0.78.0
+motor==3.0.0
 pydantic==1.9.0
-pymongo==3.12.3
+pymongo==4.1.1
+requests==2.27.1
 uvicorn==0.17.6

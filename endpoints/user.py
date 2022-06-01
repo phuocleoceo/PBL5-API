@@ -49,7 +49,7 @@ async def create(user: UserUpsert):
     Hàm tạo user, bỏ trống 2 trường image và FeatureVector
     """
     user_dict = user.dict(by_alias=True)
-    user_dict["image"] = [[""]]
+    user_dict["image"] = [""]
     user_dict["FeatureVector"] = [[""]]
     new_user = await create_user(user_dict)
     return ResponseModel(new_user, 200, "User added successfully.", False)
