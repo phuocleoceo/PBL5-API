@@ -5,11 +5,6 @@ from models.user import UserUpsert, UserImage
 from fastapi import APIRouter
 import json
 
-# Load cloudinary config
-with open("./config.json", "r") as file:
-    config = json.load(file)
-
-
 router = APIRouter(
     prefix="/auth",
     tags=["Auth"],
