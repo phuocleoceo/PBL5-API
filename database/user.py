@@ -1,9 +1,23 @@
+from fastapi.security import OAuth2PasswordBearer
 from models.PyObjectId import PyObjectId
+from passlib.context import CryptContext
 from models.user import User
 from .driver import Database
 import cloudinary.uploader
 from typing import List
 
+# Password Hash
+crypt_context = CryptContext(schemes=["sha256_crypt", "md5_crypt"])
+
+
+def get_password_hash(password):
+    return crypt_context.hash(password)
+
+
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
+
+
+# Database
 database = Database()
 
 
@@ -28,6 +42,8 @@ async def read_user_by_id(id: str):
 
 async def create_user(user_data: dict):
     db = await database.db_connection()
+    # Password hash
+    user_data["password"] = get_password_hash(user_data["password"])
     user = await db.user.insert_one(user_data)
     new_user = await db.user.find_one({"_id": user.inserted_id})
     return User(**new_user)
