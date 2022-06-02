@@ -12,7 +12,9 @@ class User(BaseModel):
     gender: str
     address: str
     mobile: str
-    indentityNumber: str
+    identityNumber: str
+    floor: int
+    room: str
     role: str
     image: List[str]
     FeatureVector: List[List]
@@ -31,10 +33,26 @@ class UserUpsert(BaseModel):
     gender: str
     address: str
     mobile: str
-    indentityNumber: str
+    identityNumber: str
+    floor: int
+    room: str
     role: str
 
 
 class UserImage(BaseModel):
     user_id: str
     image: List[str]
+
+
+class UserLogin(BaseModel):
+    username: str
+    password: str
+
+
+class Token(BaseModel):
+    access_token: str
+    token_type: str
+
+
+class TokenData(BaseModel):
+    username: Optional[str] = None
