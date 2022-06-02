@@ -1,20 +1,9 @@
-from fastapi.security import OAuth2PasswordBearer
+from database.auth import get_password_hash
 from models.PyObjectId import PyObjectId
-from passlib.context import CryptContext
 from models.user import User
 from .driver import Database
 import cloudinary.uploader
 from typing import List
-
-# Password Hash
-crypt_context = CryptContext(schemes=["sha256_crypt", "md5_crypt"])
-
-
-def get_password_hash(password):
-    return crypt_context.hash(password)
-
-
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
 
 # Database
@@ -73,13 +62,16 @@ async def update_user(id: str, user_data: dict):
     user = await db.user.find_one({"_id": PyObjectId(id)})
     if user:
         user["username"] = user_data.get("username")
-        user["password"] = user_data.get("password")
+        user["password"] = get_password_hash(user_data.get("password"))
         user["fullname"] = user_data.get("fullname")
         user["gender"] = user_data.get("gender")
         user["address"] = user_data.get("address")
         user["mobile"] = user_data.get("mobile")
         user["indentityNumber"] = user_data.get("indentityNumber")
         user["role"] = user_data.get("role")
+        # Giữ nguyên ảnh và vector
+        user["image"] = user["image"]
+        user["FeatureVector"] = user["FeatureVector"]
         updated_user = await db.user.update_one({"_id": PyObjectId(id)}, {"$set": user})
         return updated_user.acknowledged
     return False
