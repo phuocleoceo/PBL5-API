@@ -12,7 +12,9 @@ class User(BaseModel):
     gender: str
     address: str
     mobile: str
-    indentityNumber: str
+    identityNumber: str
+    floor: int
+    room: str
     role: str
     image: List[str]
     FeatureVector: List[List]
@@ -31,7 +33,9 @@ class UserUpsert(BaseModel):
     gender: str
     address: str
     mobile: str
-    indentityNumber: str
+    identityNumber: str
+    floor: int
+    room: str
     role: str
 
 
