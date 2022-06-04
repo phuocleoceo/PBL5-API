@@ -1,8 +1,8 @@
-from models.PyObjectId import PyObjectId
 from models.history import History
 from .driver import Database
 
 database = Database()
+
 
 async def read_history():
     db = await database.db_connection()
@@ -14,12 +14,16 @@ async def read_history():
         return histories
     return histories
 
-async def read_history_by_id(id: str):
+
+async def read_history_by_user_id(id: str):
     db = await database.db_connection()
-    history = await db.history.find_one({"_id": PyObjectId(id)})
-    if history:
-        return History(**history)
-    return None
+    cursor = db.history.find({"userId": id})
+    histories = []
+    if cursor:
+        async for history in cursor:
+            histories.append(History(**history))
+        return histories
+    return histories
 
 
 async def create_history(history_data: dict):

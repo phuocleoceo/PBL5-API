@@ -1,4 +1,3 @@
-from models.PyObjectId import PyObjectId
 from models.userRequest import UserRequest
 from .driver import Database
 
@@ -16,12 +15,15 @@ async def read_userRequest():
     return userRequests
 
 
-async def read_userRequest_by_id(id: str):
+async def read_userRequest_by_user_id(id: str):
     db = await database.db_connection()
-    userRequest = await db.userRequest.find_one({"_id": PyObjectId(id)})
-    if userRequest:
-        return UserRequest(**userRequest)
-    return None
+    cursor = db.userRequest.find({"userId": id})
+    userRequests = []
+    if cursor:
+        async for userRequest in cursor:
+            userRequests.append(UserRequest(**userRequest))
+        return userRequests
+    return userRequests
 
 
 async def create_userRequest(userRequest_data: dict):

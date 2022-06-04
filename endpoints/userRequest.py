@@ -1,4 +1,4 @@
-from database.userRequest import read_userRequest, read_userRequest_by_id, create_userRequest
+from database.userRequest import read_userRequest, read_userRequest_by_user_id, create_userRequest
 from models.ResponseModel import ResponseModel
 from models.userRequest import UserRequestUpsert
 from fastapi import APIRouter
@@ -17,8 +17,8 @@ async def read():
 
 
 @router.get("/{id}")
-async def read_by_id(id: str):
-    request = await read_userRequest_by_id(id)
+async def read_by_user_id(id: str):
+    request = await read_userRequest_by_user_id(id)
     return ResponseModel(request, 200, "UserRequest retrieved successfully.", False)
 
 
