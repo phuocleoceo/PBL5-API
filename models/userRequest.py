@@ -11,6 +11,7 @@ class UserRequest(BaseModel):
     timestamps: str
     imageUri: str
     response: str
+    fullname: str
 
     class Config:
         arbitrary_types_allowed = True

@@ -6,10 +6,20 @@ database = Database()
 
 async def read_userRequest():
     db = await database.db_connection()
-    cursor = db.userRequest.find({})
+    cursor = db.userRequest.aggregate([
+        {"$addFields": {"userId": {"$toObjectId": "$userId"}}},
+        {"$lookup": {
+            "from": "user",
+            "localField": "userId",
+            "foreignField": "_id",
+            "as": "linked_user"
+        }}])
     userRequests = []
     if cursor:
         async for userRequest in cursor:
+            userRequest["userId"] = str(userRequest["userId"])
+            userRequest["fullname"] = userRequest["linked_user"][0]["fullname"]
+            del userRequest["linked_user"]
             userRequests.append(UserRequest(**userRequest))
         return userRequests
     return userRequests
