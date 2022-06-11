@@ -21,7 +21,6 @@ async def read_userRequest():
             userRequest["fullname"] = userRequest["linked_user"][0]["fullname"]
             del userRequest["linked_user"]
             userRequests.append(UserRequest(**userRequest))
-        return userRequests
     return userRequests
 
 

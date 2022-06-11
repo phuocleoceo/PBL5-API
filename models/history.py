@@ -1,8 +1,7 @@
 from pydantic import BaseModel, Field
 from .PyObjectId import PyObjectId
-from typing import Optional, List
+from typing import Optional
 from bson import ObjectId
-import datetime
 
 
 class History(BaseModel):
@@ -11,6 +10,7 @@ class History(BaseModel):
     imageURi: str
     isVerify: str
     userId: str
+    fullname: str
 
     class Config:
         arbitrary_types_allowed = True
