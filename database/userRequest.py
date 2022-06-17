@@ -31,6 +31,8 @@ async def read_userRequest_by_user_id(id: str):
     userRequests = []
     if cursor:
         async for userRequest in cursor:
+            userRequest["fullname"] = ""
+            userRequest["room"] = ""
             userRequests.append(UserRequest(**userRequest))
         return userRequests
     return userRequests

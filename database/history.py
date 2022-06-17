@@ -40,6 +40,8 @@ async def read_history_by_user_id(id: str):
     histories = []
     if cursor:
         async for history in cursor:
+            history["fullname"] = ""
+            history["room"] = ""
             histories.append(History(**history))
         return histories
     return histories
