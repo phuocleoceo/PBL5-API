@@ -12,6 +12,7 @@ class UserRequest(BaseModel):
     imageUri: str
     response: str
     fullname: str
+    room: str
 
     class Config:
         arbitrary_types_allowed = True

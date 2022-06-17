@@ -21,6 +21,7 @@ async def read_history():
         async for history in cursor:
             history["userId"] = str(history["userId"])
             history["fullname"] = history["linked_user"][0]["fullname"]
+            history["room"] = history["linked_user"][0]["room"]
             del history["linked_user"]
             histories.append(History(**history))
     #### Người lạ thì thôi #####
@@ -28,6 +29,7 @@ async def read_history():
     if cursor:
         async for history in cursor:
             history["fullname"] = "Người lạ"
+            history["room"] = "Chưa thuê phòng"
             histories.append(History(**history))
     return histories
 

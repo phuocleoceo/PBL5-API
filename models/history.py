@@ -11,6 +11,7 @@ class History(BaseModel):
     isVerify: str
     userId: str
     fullname: str
+    room: str
 
     class Config:
         arbitrary_types_allowed = True

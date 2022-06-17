@@ -19,6 +19,7 @@ async def read_userRequest():
         async for userRequest in cursor:
             userRequest["userId"] = str(userRequest["userId"])
             userRequest["fullname"] = userRequest["linked_user"][0]["fullname"]
+            userRequest["room"] = userRequest["linked_user"][0]["room"]
             del userRequest["linked_user"]
             userRequests.append(UserRequest(**userRequest))
     return userRequests
