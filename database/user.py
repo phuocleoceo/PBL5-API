@@ -67,7 +67,7 @@ async def update_user(id: str, user_data: dict):
         user["gender"] = user_data.get("gender")
         user["address"] = user_data.get("address")
         user["mobile"] = user_data.get("mobile")
-        user["indentityNumber"] = user_data.get("indentityNumber")
+        user["identityNumber"] = user_data.get("identityNumber")
         user["role"] = user_data.get("role")
         # Giữ nguyên ảnh và vector
         user["image"] = user["image"]
@@ -85,3 +85,27 @@ async def delete_user(id: str):
         return True
     else:
         return False
+
+
+async def user_infor(id: str, user_data: dict):
+    if len(user_data) < 1:
+        return False
+    db = await database.db_connection()
+    user = await db.user.find_one({"_id": PyObjectId(id)})
+    if user:
+        user["username"] = user["username"]
+        user["password"] = user["password"]
+        #####################################
+        user["fullname"] = user_data.get("fullname")
+        user["gender"] = user_data.get("gender")
+        user["address"] = user_data.get("address")
+        user["mobile"] = user_data.get("mobile")
+        user["identityNumber"] = user_data.get("identityNumber")
+        #####################################
+        user["role"] = user["role"]
+        # Giữ nguyên ảnh và vector
+        user["image"] = user["image"]
+        user["FeatureVector"] = user["FeatureVector"]
+        updated_user = await db.user.update_one({"_id": PyObjectId(id)}, {"$set": user})
+        return updated_user.acknowledged
+    return False

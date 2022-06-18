@@ -44,6 +44,14 @@ class UserImage(BaseModel):
     image: List[str]
 
 
+class UserInfor(BaseModel):
+    fullname: str
+    gender: str
+    address: str
+    mobile: str
+    identityNumber: str
+
+
 class UserLogin(BaseModel):
     username: str
     password: str

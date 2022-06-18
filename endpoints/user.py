@@ -1,7 +1,7 @@
 from database.user import (read_user, read_user_by_id, create_user,
-                           save_image_user, update_user, delete_user)
+                           save_image_user, update_user, delete_user, user_infor)
+from models.user import UserInfor, UserUpsert, UserImage
 from models.ResponseModel import ResponseModel
-from models.user import UserUpsert, UserImage
 from fastapi import APIRouter
 import cloudinary
 import json
@@ -81,3 +81,13 @@ async def delete(id: str):
     """
     deleted_user = await delete_user(id)
     return ResponseModel(deleted_user, 200, "Product deleted successfully.", False)
+
+
+@router.put("/user-infor")
+async def updateUserInfor(id: str, user: UserInfor):
+    """
+    User tự cập nhật thông tin của mình
+    """
+    user_dict = user.dict(by_alias=True)
+    updated_user = await user_infor(id, user_dict)
+    return ResponseModel(updated_user, 200, "User infor updated successfully.", False)
