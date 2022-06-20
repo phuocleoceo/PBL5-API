@@ -44,7 +44,8 @@ async def save_image_user(id: str, list_image: List[str]):
     # Duyệt qua từng base64 được gửi lên
     for b64 in list_image:
         # Upload ảnh lên Cloudinary trực tiếp bằng base64
-        result = cloudinary.uploader.upload("data:image/jpeg;base64," + b64, folder=f"pbl5/{id}")
+        result = cloudinary.uploader.upload(
+            "data:image/jpeg;base64," + b64, folder=f"pbl5/{id}")
         # Lấy url của hình ảnh đã upload
         url = result.get("url")
         list_url.append(url)
@@ -68,6 +69,8 @@ async def update_user(id: str, user_data: dict):
         user["address"] = user_data.get("address")
         user["mobile"] = user_data.get("mobile")
         user["identityNumber"] = user_data.get("identityNumber")
+        user["floor"] = user_data.get("floor")
+        user["room"] = user_data.get("room")
         user["role"] = user_data.get("role")
         # Giữ nguyên ảnh và vector
         user["image"] = user["image"]
