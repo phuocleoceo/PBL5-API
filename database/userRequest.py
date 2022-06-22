@@ -25,21 +25,10 @@ async def read_userRequest():
     return userRequests
 
 
-async def read_userRequest_by_user_id(id: str):
-    db = await database.db_connection()
-    cursor = db.userRequest.find({"userId": id})
-    userRequests = []
-    if cursor:
-        async for userRequest in cursor:
-            userRequest["fullname"] = ""
-            userRequest["room"] = ""
-            userRequests.append(UserRequest(**userRequest))
-        return userRequests
-    return userRequests
-
-
 async def create_userRequest(userRequest_data: dict):
     db = await database.db_connection()
     userRequest = await db. userRequest.insert_one(userRequest_data)
-    new_userRequest = await db. userRequest.find_one({"_id": userRequest.inserted_id})
+    new_userRequest = await db.userRequest.find_one({"_id": userRequest.inserted_id})
+    new_userRequest["fullname"] = ""
+    new_userRequest["room"] = ""
     return UserRequest(**new_userRequest)

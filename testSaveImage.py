@@ -35,3 +35,14 @@ my_user.add_image(base_dir + "NamNhi/IMG_3316.JPG")
 
 x = requests.post(url, json=my_user.as_dict())
 print(x.status_code)
+
+# {
+#     "user_id": "628f83024d02afad275af03f",
+#     "image": [
+#         "base64",
+#         "base64",
+#         "base64",
+#         "base64",
+#         "base64"
+#     ]
+# }

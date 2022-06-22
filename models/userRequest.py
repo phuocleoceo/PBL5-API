@@ -9,8 +9,6 @@ class UserRequest(BaseModel):
     id: Optional[PyObjectId] = Field(alias="_id")
     userId: str
     timestamps: str
-    imageUri: str
-    response: str
     fullname: str
     room: str
 
@@ -22,7 +20,5 @@ class UserRequest(BaseModel):
 
 
 class UserRequestUpsert(BaseModel):
-    userid: str
+    userId: str
     timestamps: str
-    imageUri: str
-    response: str

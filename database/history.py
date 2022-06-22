@@ -51,4 +51,6 @@ async def create_history(history_data: dict):
     db = await database.db_connection()
     history = await db.history.insert_one(history_data)
     new_history = await db.history.find_one({"_id": history.inserted_id})
+    new_history["fullname"] = ""
+    new_history["room"] = ""
     return History(**new_history)
