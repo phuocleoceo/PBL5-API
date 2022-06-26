@@ -31,6 +31,7 @@ async def read_history():
             history["fullname"] = "Người lạ"
             history["room"] = "Chưa thuê phòng"
             histories.append(History(**history))
+    histories = sorted(histories, key=lambda x: x.timestamps)
     return histories
 
 
